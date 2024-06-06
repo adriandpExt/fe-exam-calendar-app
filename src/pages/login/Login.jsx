@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 
-import { Textfield } from "../../components";
+import { SvgIcons, Textfield } from "../../components";
 
 import { useLogin } from "../../queries/login";
 
@@ -51,18 +51,26 @@ const Login = () => {
     <div
       className="text-center h-screen p-10"
       style={{
-        backgroundImage: `url(https://img.freepik.com/premium-photo/calendar-page-close-up-blue-background-business-planning-appointment-meeting-concept_293060-976.jpg)`,
+        backgroundImage: `url(https://echo360.com/wp-content/uploads/2018/08/iStock-916563360.jpg)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
       <form
-        className="space-y-5 pt-40 px-10 pb-10 border-4 w-full lg:w-1/2 backdrop-filter backdrop-blur-lg bg-white bg-opacity-30 shadow-md"
+        className="space-y-5 pt-28 px-10 pb-10 border-4 w-full lg:w-1/2 backdrop-filter backdrop-blur-lg bg-white bg-opacity-30 shadow-md rounded-xl text-center"
         onSubmit={loginForm.handleSubmit}
       >
+        <div className="flex items-center">
+          <SvgIcons name={"ic_calendar"} />
+          <p className="font-semibold text-xl from-stone-600">
+            LOGIN TO SETUP APPOINTMENT
+          </p>
+        </div>
+
         <Textfield
           name="email"
           type={"email"}
+          placeholder="Email"
           iconName={"ic_email"}
           value={loginForm.values.email}
           onChange={loginForm.handleChange}
@@ -73,6 +81,7 @@ const Login = () => {
         <Textfield
           name="password"
           type={"password"}
+          placeholder="Password"
           iconName={"ic_password"}
           value={loginForm.values.password}
           onChange={loginForm.handleChange}
@@ -83,7 +92,10 @@ const Login = () => {
           isSvg
         />
 
-        <button className="btn w-full" type="submit">
+        <button
+          className="btn btn-outline hover:btn-primary w-full text-lg"
+          type="submit"
+        >
           LOGIN
         </button>
       </form>

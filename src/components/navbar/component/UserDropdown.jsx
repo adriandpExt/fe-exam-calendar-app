@@ -21,7 +21,7 @@ export const UserDropdown = () => {
 
   return (
     <div className="dropdown dropdown-bottom dropdown-end bg-blue-50">
-      <div tabIndex={0} role="button" className="btn m-1">
+      <div tabIndex={0} role="button" className="btn btn-outline m-1">
         <Avatar name={email} />
 
         {email}
