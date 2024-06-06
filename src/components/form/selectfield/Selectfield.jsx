@@ -12,9 +12,9 @@ export const Selectfield = ({
   const renderError = () => {
     if (!value && error) {
       return (
-        <div className="flex justify-end">
-          <span className="text-red-500">{error}</span>
-          {helperText && <span className="text-red-500">{helperText}</span>}
+        <div className="flex sm:justify-end justify-start text-red-500">
+          <span>{error}</span>
+          {helperText && <span>{helperText}</span>}
         </div>
       );
     }
