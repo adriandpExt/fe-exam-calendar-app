@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 import { useFormik } from "formik";
 
 import { SvgIcons, Textfield } from "../../components";
@@ -25,13 +28,25 @@ const Login = () => {
 
   const handleSubmitLogin = async (values, { setSubmitting }) => {
     try {
-      await loginMutation.mutateAsync(values);
-      const token = generateToken(20);
+      const response = await loginMutation.mutateAsync(values);
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("email", values.email);
+      if (
+        response &&
+        response.email === values.email &&
+        response.password === values.password
+      ) {
+        const token = generateToken(20);
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("email", response.email);
+
+        setIsLoggedIn(true);
+        navigate("/dashboard");
+      } else {
+        toast.error("Incorrect email or password");
+      }
     } catch (error) {
-      console.error("Login error:", error.message);
+      toast.error(`${error} Incorrect email or password`);
     } finally {
       setSubmitting(false);
     }
@@ -99,6 +114,20 @@ const Login = () => {
           LOGIN
         </button>
       </form>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
     </div>
   );
 };

@@ -16,6 +16,7 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
       try {
         await postMeeting.mutateAsync(values);
         onCreate();
+        formSubmit.resetForm();
       } catch (error) {
         console.error("Error:", error);
       }

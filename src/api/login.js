@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export const login = async ({ email, password }) => {
-  const baseurl = "http://localhost:8080/login";
-  const response = await axios.post(baseurl, { email, password });
-
-  return response.data;
+  const response = await axios.get(
+    `http://localhost:8080/login?email=${email}&password=${password}`
+  );
+  const user = response.data[0];
+  return user;
 };
