@@ -2,7 +2,7 @@
 
 import { useFormik } from "formik";
 
-import { Textfield, Selectfield } from "../../../components";
+import { Textfield, Selectfield, Textarea } from "../../../components";
 
 import { usePutAppointment } from "../../../queries/appointment";
 
@@ -57,7 +57,7 @@ const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
         <h3 className="font-bold text-lg pb-5">{title}</h3>
 
         <form className="space-y-5" onSubmit={formSubmit.handleSubmit}>
-          <Textfield
+          <Textarea
             name={"description"}
             multiple
             placeholder="Description"

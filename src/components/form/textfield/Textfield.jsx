@@ -12,7 +12,6 @@ export const Textfield = ({
   onChange,
   error,
   helperText,
-  multiple = false,
 }) => {
   const renderError = () => {
     return (
@@ -29,38 +28,21 @@ export const Textfield = ({
 
   return (
     <>
-      {multiple ? (
-        <>
-          <textarea
-            className="input input-bordered flex items-center gap-2 w-full h-28 resize-none whitespace-pre-line grow pl-8 "
-            name={name}
-            placeholder={placeholder}
-            rows={5}
-            value={value}
-            onChange={onChange}
-          >
-            <div className="text-red-500 hidden sm:hidden md:block">
-              {renderError()}
-            </div>
-          </textarea>
-          <div className="hidden:sm"> {renderError()}</div>
-        </>
-      ) : (
-        <label className="input input-bordered flex items-center gap-2">
-          {renderIsSvg()}
-          <input
-            type={type}
-            className="grow pl-8 whitespace-pre"
-            placeholder={placeholder}
-            name={name}
-            value={value}
-            onChange={onChange}
-          />
-          <div className="text-red-500 hidden sm:hidden md:block">
-            {renderError()}
-          </div>
-        </label>
-      )}
+      <label className="input input-bordered flex items-center gap-2">
+        {renderIsSvg()}
+        <input
+          type={type}
+          className="grow pl-8 whitespace-pre"
+          placeholder={placeholder}
+          name={name}
+          value={value}
+          onChange={onChange}
+        />
+        <div className="text-red-500 hidden sm:hidden md:block">
+          {renderError()}
+        </div>
+      </label>
+
       <div className="text-red-950 sm:hidden  md:hidden">{renderError()}</div>
     </>
   );

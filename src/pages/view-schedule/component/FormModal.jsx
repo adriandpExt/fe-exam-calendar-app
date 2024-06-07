@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useFormik } from "formik";
-import { Textfield, Selectfield } from "../../../components";
+import { Textfield, Selectfield, Textarea } from "../../../components";
 
 import { usePostAppointment } from "../../../queries/appointment";
 
@@ -41,7 +41,7 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
         <h3 className="font-bold text-lg pb-5">{title}</h3>
 
         <form className="space-y-5" onSubmit={formSubmit.handleSubmit}>
-          <Textfield
+          <Textarea
             name={"description"}
             placeholder="Description"
             value={formSubmit.values.description}
