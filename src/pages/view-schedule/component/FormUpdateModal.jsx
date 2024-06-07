@@ -59,6 +59,7 @@ const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
         <form className="space-y-5" onSubmit={formSubmit.handleSubmit}>
           <Textfield
             name={"description"}
+            multiple
             placeholder="Description"
             value={formSubmit.values.description}
             onChange={formSubmit.handleChange}

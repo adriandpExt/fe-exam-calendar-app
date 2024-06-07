@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 
+import moment from "moment";
+
 export const Card = ({ data, onView }) => {
   return (
     <div
@@ -7,11 +9,14 @@ export const Card = ({ data, onView }) => {
       onClick={() => onView(data)}
     >
       <div className="card-body">
-        <h2>{data?.description}</h2>
+        <h2 className="font-semibold">Description</h2>
+        <p className="whitespace-pre-wrap h-32 overflow-auto">
+          {data?.description}
+        </p>
       </div>
       <div className="card-actions flex justify-between p-5">
-        <p className="font-semibold">{data?.status}</p>
-        <p>{data?.calendarDate}</p>
+        <p className="font-semibold">Status:{data?.status}</p>
+        <p>Date: {moment(data?.calendarDate).format("MMMM DD YYYY")}</p>
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ export const Textfield = ({
       {multiple ? (
         <>
           <textarea
-            className="input input-bordered flex items-center gap-2 w-full resize-none whitespace-pre"
+            className="input input-bordered flex items-center gap-2 w-full h-28 resize-none whitespace-pre-line grow pl-8 "
             name={name}
             placeholder={placeholder}
             rows={5}

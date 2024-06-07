@@ -33,7 +33,7 @@ export const Selectfield = ({
           {placeholder}
         </option>
         {options?.map((option) => (
-          <option key={option.value} value={option.value} className="pl-8">
+          <option key={option.value} value={option.value} className="grow pl-8">
             {option.label}
           </option>
         ))}
