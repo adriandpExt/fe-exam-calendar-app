@@ -1,3 +1,4 @@
+import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 
 import { Navbar } from "../../components";
@@ -11,6 +12,7 @@ import Card from "./component/Card";
 import FormModal from "./component/FormModal";
 
 import FormUpdateModal from "./component/FormUpdateModal";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const ViewSchedule = () => {
   const { data: allAppointments, refetch } = useGetAllAppointment();
@@ -39,6 +41,7 @@ const ViewSchedule = () => {
     setUpdateModal(false);
     refetch();
     setSelectedAppointment(null);
+    toast.success("Successfullt updated!");
     stop();
   };
 
@@ -49,15 +52,17 @@ const ViewSchedule = () => {
         await deleteAppointmentMutation.mutateAsync({ id });
         setUpdateModal(false);
         refetch();
+        toast.success("Successfully deleted!");
       }
     } catch (error) {
-      console.error("Error deleting appointment:", error);
+      toast.success("Error deleting appointment:", error);
     }
   };
 
   const handleCreateModal = () => {
     setIsModalOpen(false);
     refetch();
+    toast.success("Successfully created!");
   };
 
   const renderUpdateModal = () => {
@@ -105,6 +110,20 @@ const ViewSchedule = () => {
       </div>
       {renderCreateModal()}
       {renderUpdateModal()}
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
     </div>
   );
 };
