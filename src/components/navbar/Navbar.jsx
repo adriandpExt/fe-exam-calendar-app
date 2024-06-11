@@ -42,6 +42,7 @@ export const Navbar = ({ onFilterChange }) => {
       </li>
     ));
   };
+
   const renderDrawerSide = () => {
     return (
       <div className="drawer-side">
@@ -109,9 +110,12 @@ export const Navbar = ({ onFilterChange }) => {
           <UserDropdown />
         </div>
 
-        <button className="lg:hidden" onClick={toggleDrawer}>
-          <SvgIcons name={"ic_menu"} style={{ height: 30 }} />
-        </button>
+        <SvgIcons
+          className="lg:hidden"
+          name={"ic_menu"}
+          style={{ height: 30 }}
+          onClick={toggleDrawer}
+        />
       </div>
 
       {renderDrawer()}
