@@ -1,28 +1,31 @@
 /* eslint-disable react/prop-types */
-
 import { useFormik } from "formik";
+import { Textfield, Selectfield, Textarea } from "../form";
 
-import { Textfield, Selectfield, Textarea } from "../../../components";
+import { usePostAppointment } from "../../queries/appointment";
 
-import { usePutAppointment } from "../../../queries/appointment";
+import { validationSchema, initialState } from "./utils";
 
-import { validationSchema } from "./utils";
-
-const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
-  const updateMeeting = usePutAppointment();
+export const FormModal = ({ onCreate, open, title, onClose }) => {
+  const postMeeting = usePostAppointment();
 
   const formSubmit = useFormik({
     initialValues: {
-      description: data?.description || "",
-      calendarDate: data?.calendarDate || "",
-      status: data?.status || "",
-      id: data?.id,
+      ...initialState,
+      status: "Pending",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      const createForm = {
+        description: values.description,
+        calendarDate: values.calendarDate,
+        status: "Pending",
+      };
       try {
-        updateMeeting.mutate(values);
-        onClose();
+        await postMeeting.mutateAsync(createForm);
+
+        onCreate();
+        formSubmit.resetForm();
       } catch (error) {
         console.error("Error:", error);
       }
@@ -35,18 +38,9 @@ const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
         <button className="btn btn-error" type="button" onClick={onClose}>
           Close
         </button>
-        <div>
-          <button
-            type="button"
-            className="btn btn-warning mr-2"
-            onClick={() => onDelete(data?.id)}
-          >
-            Delete
-          </button>
-          <button type="submit" className="btn btn-success">
-            Update
-          </button>
-        </div>
+        <button type="submit" className="btn btn-success">
+          Create
+        </button>
       </div>
     );
   };
@@ -59,7 +53,6 @@ const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
         <form className="space-y-5" onSubmit={formSubmit.handleSubmit}>
           <Textarea
             name={"description"}
-            multiple
             placeholder="Description"
             value={formSubmit.values.description}
             onChange={formSubmit.handleChange}
@@ -71,7 +64,6 @@ const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
               formSubmit.touched.description && formSubmit.errors.description
             }
           />
-
           <Textfield
             name={"calendarDate"}
             type="date"
@@ -85,6 +77,7 @@ const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
               formSubmit.touched.calendarDate && formSubmit.errors.calendarDate
             }
           />
+
           <Selectfield
             name={"status"}
             value={formSubmit.values.status}
@@ -105,4 +98,4 @@ const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
   );
 };
 
-export default FormUpdateModal;
+export default FormModal;

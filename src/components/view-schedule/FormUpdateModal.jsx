@@ -1,22 +1,28 @@
 /* eslint-disable react/prop-types */
+
 import { useFormik } from "formik";
-import { Textfield, Selectfield, Textarea } from "../../../components";
 
-import { usePostAppointment } from "../../../queries/appointment";
+import { Textfield, Selectfield, Textarea } from "../form";
 
-import { validationSchema, initialState } from "./utils";
+import { usePutAppointment } from "../../queries/appointment";
 
-export const FormModal = ({ onCreate, open, title, onClose }) => {
-  const postMeeting = usePostAppointment();
+import { validationSchema } from "./utils";
+
+export const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
+  const updateMeeting = usePutAppointment();
 
   const formSubmit = useFormik({
-    initialValues: initialState,
+    initialValues: {
+      description: data?.description || "",
+      calendarDate: data?.calendarDate || "",
+      status: data?.status || "",
+      id: data?.id,
+    },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        await postMeeting.mutateAsync(values);
-        onCreate();
-        formSubmit.resetForm();
+        updateMeeting.mutate(values);
+        onClose();
       } catch (error) {
         console.error("Error:", error);
       }
@@ -29,9 +35,18 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
         <button className="btn btn-error" type="button" onClick={onClose}>
           Close
         </button>
-        <button type="submit" className="btn btn-success">
-          Create
-        </button>
+        <div>
+          <button
+            type="button"
+            className="btn btn-warning mr-2"
+            onClick={() => onDelete(data?.id)}
+          >
+            Delete
+          </button>
+          <button type="submit" className="btn btn-success">
+            Update
+          </button>
+        </div>
       </div>
     );
   };
@@ -44,6 +59,7 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
         <form className="space-y-5" onSubmit={formSubmit.handleSubmit}>
           <Textarea
             name={"description"}
+            multiple
             placeholder="Description"
             value={formSubmit.values.description}
             onChange={formSubmit.handleChange}
@@ -55,6 +71,7 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
               formSubmit.touched.description && formSubmit.errors.description
             }
           />
+
           <Textfield
             name={"calendarDate"}
             type="date"
@@ -68,7 +85,6 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
               formSubmit.touched.calendarDate && formSubmit.errors.calendarDate
             }
           />
-
           <Selectfield
             name={"status"}
             value={formSubmit.values.status}
@@ -89,4 +105,4 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
   );
 };
 
-export default FormModal;
+export default FormUpdateModal;

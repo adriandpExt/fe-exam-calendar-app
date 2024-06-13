@@ -4,14 +4,16 @@ import { useState } from "react";
 import { Navbar } from "../../components";
 
 import {
+  Card,
+  FormModal,
+  FormUpdateModal,
+} from "../../components/view-schedule";
+
+import {
   useGetAllAppointment,
   useDeleteAppointment,
 } from "../../queries/appointment";
 
-import Card from "./component/Card";
-import FormModal from "./component/FormModal";
-
-import FormUpdateModal from "./component/FormUpdateModal";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const ViewSchedule = () => {
