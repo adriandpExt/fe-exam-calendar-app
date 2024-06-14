@@ -30,7 +30,11 @@ const Login = () => {
     try {
       const response = await loginMutation.mutateAsync(values);
 
-      if (response) {
+      if (
+        response &&
+        response.email === values.email &&
+        response.password === values.password
+      ) {
         const token = generateToken(20);
 
         localStorage.setItem("token", token);
