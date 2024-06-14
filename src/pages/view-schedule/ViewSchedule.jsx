@@ -99,6 +99,21 @@ const ViewSchedule = () => {
     );
   };
 
+  const renderAppointment = () => {
+    return filteredAppointments?.length === 0 ? (
+      <div className="font-bold text-center h-screen">
+        <p>NO APPOINTMENT AVAILABLE</p>
+      </div>
+    ) : (
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 h-full sm:h-screen">
+        {filteredAppointments?.map((item) => (
+          <div key={item.id} className="col-span-1">
+            <Card data={item} onView={handleView} />
+          </div>
+        ))}
+      </div>
+    );
+  };
   return (
     <main className=" h-full w-full p-10 space-y-5 bg-blue-50">
       <Navbar onFilterChange={handleFilterChange} />
@@ -110,13 +125,7 @@ const ViewSchedule = () => {
         ADD APPOINTMENT
       </button>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 h-full sm:h-screen">
-        {filteredAppointments?.map((item) => (
-          <div key={item.id} className="col-span-1">
-            <Card data={item} onView={handleView} />
-          </div>
-        ))}
-      </div>
+      {renderAppointment()}
       {renderCreateModal()}
       {renderUpdateModal()}
 

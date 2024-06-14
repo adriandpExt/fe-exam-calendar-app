@@ -7,6 +7,7 @@ export const Selectfield = ({
   options,
   error,
   helperText,
+  disabled = false,
   placeholder = "Please select",
 }) => {
   const renderError = () => {
@@ -28,6 +29,7 @@ export const Selectfield = ({
         name={name}
         value={value}
         onChange={onChange}
+        disabled={disabled}
       >
         <option disabled value="">
           {placeholder}

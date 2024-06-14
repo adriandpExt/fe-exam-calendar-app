@@ -81,6 +81,7 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
           />
 
           <Selectfield
+            disabled
             name={"status"}
             value={formSubmit.values.status}
             onChange={formSubmit.handleChange}
