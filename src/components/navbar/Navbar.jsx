@@ -60,14 +60,21 @@ export const Navbar = ({ onFilterChange }) => {
             </div>
           </li>
           <li>
-            <button onClick={handleLogout} className="text-lg font-semibold">
+            <button onClick={handleLogout} className="text-lg font-semibold ">
+              <SvgIcons name={"ic_logout"} style={{ height: 20, width: 20 }} />
               Logout
             </button>
           </li>
           <li>
             <details className="collapse collapse-arrow bg-blue-50">
               <summary className="collapse-title text-lg font-semibold">
-                Filter
+                <p className="flex items-center gap-2">
+                  <SvgIcons
+                    name={"ic_filter"}
+                    style={{ height: 20, width: 20 }}
+                  />
+                  Filter
+                </p>
               </summary>
               <div className="collapse-content">
                 <ul>{renderList()}</ul>
@@ -99,7 +106,7 @@ export const Navbar = ({ onFilterChange }) => {
 
   return (
     <>
-      <div className="navbar bg-blue-50  z-20">
+      <nav className="navbar bg-blue-50  z-20">
         <div className="flex items-center flex-1">
           <SvgIcons name="ic_calendar" style={{ height: 30, width: 30 }} />
           <a className="btn btn-ghost font-extrabold text-2xl">CALENDAR APP</a>
@@ -116,7 +123,7 @@ export const Navbar = ({ onFilterChange }) => {
           style={{ height: 30 }}
           onClick={toggleDrawer}
         />
-      </div>
+      </nav>
 
       {renderDrawer()}
     </>

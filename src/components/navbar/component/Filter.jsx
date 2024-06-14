@@ -1,3 +1,5 @@
+import { SvgIcons } from "../../svg-icons";
+
 import { detailsList } from "../utils";
 
 // eslint-disable-next-line react/prop-types
@@ -16,6 +18,7 @@ export const Filter = ({ onFilterChange }) => {
   return (
     <div className="dropdown dropdown-bottom dropdown-end bg-blue-50">
       <div tabIndex={0} role="button" className="btn btn-outline m-1">
+        <SvgIcons name={"ic_filter"} style={{ height: 20, width: 20 }} />
         FILTER
       </div>
       <ul

@@ -1,7 +1,7 @@
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 
-import { Navbar } from "../../components";
+import { Navbar, SvgIcons } from "../../components";
 
 import {
   Card,
@@ -39,12 +39,17 @@ const ViewSchedule = () => {
     setUpdateModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleUpdate = () => {
     setUpdateModal(false);
     refetch();
     setSelectedAppointment(null);
     toast.success("Successfullt updated!");
     stop();
+  };
+
+  const handleCloseUpdate = () => {
+    setUpdateModal(false);
+    setSelectedAppointment(null);
   };
 
   const handleDelete = async () => {
@@ -75,8 +80,9 @@ const ViewSchedule = () => {
           open={updateModal}
           title="Edit Appointment"
           data={selectedAppointment}
-          onClose={handleCloseModal}
+          onClose={handleCloseUpdate}
           onDelete={handleDelete}
+          onUpdate={handleUpdate}
         />
       )
     );
@@ -94,16 +100,17 @@ const ViewSchedule = () => {
   };
 
   return (
-    <div className=" h-full w-full p-10 space-y-5 bg-blue-50">
+    <main className=" h-full w-full p-10 space-y-5 bg-blue-50">
       <Navbar onFilterChange={handleFilterChange} />
       <button
-        className="btn w-56 border-red-950"
+        className="btn btn-outline m-1 w-56"
         onClick={() => setIsModalOpen(true)}
       >
-        ADD
+        <SvgIcons name={"ic_add"} style={{ height: 20, width: 20 }} />
+        ADD APPOINTMENT
       </button>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 h-screen">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 h-full sm:h-screen">
         {filteredAppointments?.map((item) => (
           <div key={item.id} className="col-span-1">
             <Card data={item} onView={handleView} />
@@ -126,7 +133,7 @@ const ViewSchedule = () => {
         theme="dark"
         transition={Bounce}
       />
-    </div>
+    </main>
   );
 };
 

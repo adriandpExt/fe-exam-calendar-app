@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Avatar from "./Avatar";
+import { SvgIcons } from "../../svg-icons";
 
 export const UserDropdown = () => {
   const navigate = useNavigate();
@@ -31,7 +32,10 @@ export const UserDropdown = () => {
         className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
       >
         <li>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleLogout} className="flex justify-between">
+            Logout
+            <SvgIcons name={"ic_logout"} style={{ height: 20, width: 20 }} />
+          </button>
         </li>
       </ul>
     </div>

@@ -5,6 +5,7 @@ import { Textfield, Selectfield, Textarea } from "../form";
 import { usePostAppointment } from "../../queries/appointment";
 
 import { validationSchema, initialState } from "./utils";
+import { SvgIcons } from "../svg-icons";
 
 export const FormModal = ({ onCreate, open, title, onClose }) => {
   const postMeeting = usePostAppointment();
@@ -40,6 +41,7 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
         </button>
         <button type="submit" className="btn btn-success">
           Create
+          <SvgIcons name={"ic_create"} style={{ height: 20, width: 20 }} />
         </button>
       </div>
     );

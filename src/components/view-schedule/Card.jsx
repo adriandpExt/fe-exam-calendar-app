@@ -3,20 +3,32 @@
 import moment from "moment";
 
 export const Card = ({ data, onView }) => {
+  const trimData =
+    data?.description.length >= 100
+      ? `${data?.description.slice(0, 100)} ...`
+      : data?.description;
+
   return (
     <div
-      className="card w-60 bg-base-100 shadow-2xl"
+      className="card w-60 bg-base-100 shadow-2xl hover:cursor-pointer"
       onClick={() => onView(data)}
     >
-      <div className="card-body">
-        <h2 className="font-semibold">Description</h2>
-        <p className="whitespace-pre-wrap h-32 overflow-auto">
-          {data?.description}
+      <div className="card-title px-5 pt-4">
+        <p className="text-sm">
+          ✭✭✭ DATE:
+          {moment(data?.calendarDate)
+            .format("MMMM DD, YYYY")
+            .toLocaleUpperCase()}
         </p>
       </div>
+
+      <div className="card-body">
+        <p className="whitespace-pre-wrap h-32 ">{trimData}</p>
+      </div>
+
+      <hr />
       <div className="card-actions flex justify-between p-5">
-        <p className="font-semibold">Status:{data?.status}</p>
-        <p>Date: {moment(data?.calendarDate).format("MMMM DD YYYY")}</p>
+        <p className="font-semibold">STATUS: {data?.status.toUpperCase()}</p>
       </div>
     </div>
   );

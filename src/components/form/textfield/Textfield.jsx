@@ -38,12 +38,8 @@ export const Textfield = ({
           value={value}
           onChange={onChange}
         />
-        <div className="text-red-500 hidden sm:hidden md:block">
-          {renderError()}
-        </div>
       </label>
-
-      <div className="text-red-950 sm:hidden  md:hidden">{renderError()}</div>
+      <div className="flex sm:justify-end justify-start">{renderError()}</div>
     </>
   );
 };

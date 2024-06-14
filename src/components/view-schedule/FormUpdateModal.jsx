@@ -3,12 +3,20 @@
 import { useFormik } from "formik";
 
 import { Textfield, Selectfield, Textarea } from "../form";
+import { SvgIcons } from "../svg-icons";
 
 import { usePutAppointment } from "../../queries/appointment";
 
 import { validationSchema } from "./utils";
 
-export const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
+export const FormUpdateModal = ({
+  open,
+  title,
+  data,
+  onClose,
+  onDelete,
+  onUpdate,
+}) => {
   const updateMeeting = usePutAppointment();
 
   const formSubmit = useFormik({
@@ -22,7 +30,7 @@ export const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
     onSubmit: async (values) => {
       try {
         updateMeeting.mutate(values);
-        onClose();
+        onUpdate();
       } catch (error) {
         console.error("Error:", error);
       }
@@ -42,9 +50,11 @@ export const FormUpdateModal = ({ open, title, data, onClose, onDelete }) => {
             onClick={() => onDelete(data?.id)}
           >
             Delete
+            <SvgIcons name={"ic_delete"} style={{ height: 20, width: 20 }} />
           </button>
           <button type="submit" className="btn btn-success">
             Update
+            <SvgIcons name={"ic_create"} style={{ height: 20, width: 20 }} />
           </button>
         </div>
       </div>

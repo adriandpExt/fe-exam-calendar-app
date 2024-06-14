@@ -19,7 +19,7 @@ export const Textarea = ({
   return (
     <>
       <textarea
-        className="input input-bordered flex items-center gap-2 w-full h-28 resize-none whitespace-pre-line grow pl-8 "
+        className="input input-bordered flex items-center gap-2 w-full h-40 resize-none whitespace-pre-line grow pl-8 "
         name={name}
         placeholder={placeholder}
         rows={5}
