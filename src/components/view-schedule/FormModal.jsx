@@ -1,18 +1,23 @@
 /* eslint-disable react/prop-types */
 import { useFormik } from "formik";
-import { Textfield, Selectfield, Textarea } from "../form";
+import moment from "moment";
 
-import { usePostAppointment } from "../../queries/appointment";
+import { Textfield, Selectfield, Textarea } from "../form";
+import { SvgIcons } from "../svg-icons";
+
+import { usePostAppointment } from "~/queries/appointment";
 
 import { validationSchema, initialState } from "./utils";
-import { SvgIcons } from "../svg-icons";
 
 export const FormModal = ({ onCreate, open, title, onClose }) => {
   const postMeeting = usePostAppointment();
 
+  const dateToday = moment().format("yyyy-MM-DD");
+
   const formSubmit = useFormik({
     initialValues: {
       ...initialState,
+      calendarDate: dateToday,
       status: "Pending",
     },
     validationSchema: validationSchema,
@@ -54,6 +59,7 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
 
         <form className="space-y-5" onSubmit={formSubmit.handleSubmit}>
           <Textarea
+            label={"Description"}
             name={"description"}
             placeholder="Description"
             value={formSubmit.values.description}
@@ -66,7 +72,9 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
               formSubmit.touched.description && formSubmit.errors.description
             }
           />
+
           <Textfield
+            label="Date"
             name={"calendarDate"}
             type="date"
             value={formSubmit.values.calendarDate}
@@ -78,10 +86,13 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
             helperText={
               formSubmit.touched.calendarDate && formSubmit.errors.calendarDate
             }
+            iconName={"ic_calendar"}
+            isSvg
           />
 
           <Selectfield
             disabled
+            label="Status"
             name={"status"}
             value={formSubmit.values.status}
             onChange={formSubmit.handleChange}
@@ -94,6 +105,7 @@ export const FormModal = ({ onCreate, open, title, onClose }) => {
               { label: "Done", value: "Done" },
             ]}
           />
+
           {renderActionButton()}
         </form>
       </div>

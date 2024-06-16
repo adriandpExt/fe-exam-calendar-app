@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { Textfield, Selectfield, Textarea } from "../form";
 import { SvgIcons } from "../svg-icons";
 
-import { usePutAppointment } from "../../queries/appointment";
+import { usePutAppointment } from "~/queries/appointment";
 
 import { validationSchema } from "./utils";
 
@@ -68,6 +68,7 @@ export const FormUpdateModal = ({
 
         <form className="space-y-5" onSubmit={formSubmit.handleSubmit}>
           <Textarea
+            label={"Description"}
             name={"description"}
             multiple
             placeholder="Description"
@@ -83,6 +84,7 @@ export const FormUpdateModal = ({
           />
 
           <Textfield
+            label={"Date"}
             name={"calendarDate"}
             type="date"
             value={formSubmit.values.calendarDate}
@@ -94,8 +96,12 @@ export const FormUpdateModal = ({
             helperText={
               formSubmit.touched.calendarDate && formSubmit.errors.calendarDate
             }
+            iconName={"ic_calendar"}
+            isSvg
           />
+
           <Selectfield
+            label={"Status"}
             name={"status"}
             value={formSubmit.values.status}
             onChange={formSubmit.handleChange}

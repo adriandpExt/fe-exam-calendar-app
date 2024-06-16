@@ -1,18 +1,18 @@
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 
-import { Navbar, SvgIcons } from "../../components";
-
 import {
+  Navbar,
+  SvgIcons,
   Card,
   FormModal,
   FormUpdateModal,
-} from "../../components/view-schedule";
+} from "~/components";
 
 import {
   useGetAllAppointment,
   useDeleteAppointment,
-} from "../../queries/appointment";
+} from "~/queries/appointment";
 
 import { Bounce, ToastContainer, toast } from "react-toastify";
 

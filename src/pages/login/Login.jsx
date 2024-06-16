@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { useFormik } from "formik";
 
-import { SvgIcons, Textfield } from "../../components";
+import { SvgIcons, Textfield } from "~/components";
 
-import { useLogin } from "../../queries/login";
+import { useLogin } from "~/queries/login";
 
 import { validationSchema, generateToken } from "./utils";
 

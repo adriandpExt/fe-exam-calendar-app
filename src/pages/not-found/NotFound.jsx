@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import notFound from "../../assets/404.png";
+import notFound from "~/assets/404.png";
 
 const NotFound = () => {
   const email = localStorage.getItem("email");

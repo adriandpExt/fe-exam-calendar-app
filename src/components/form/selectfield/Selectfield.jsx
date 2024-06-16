@@ -2,6 +2,7 @@
 
 export const Selectfield = ({
   name,
+  label,
   value,
   onChange,
   options,
@@ -23,9 +24,10 @@ export const Selectfield = ({
   };
 
   return (
-    <>
+    <div className="font-mono">
+      {label}
       <select
-        className="select select-bordered w-full"
+        className="select select-bordered w-full pl-8"
         name={name}
         value={value}
         onChange={onChange}
@@ -35,13 +37,13 @@ export const Selectfield = ({
           {placeholder}
         </option>
         {options?.map((option) => (
-          <option key={option.value} value={option.value} className="grow pl-8">
+          <option key={option.value} value={option.value}>
             {option.label}
           </option>
         ))}
       </select>
       {renderError()}
-    </>
+    </div>
   );
 };
 

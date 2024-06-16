@@ -11,3 +11,9 @@ export const initialState = {
   calendarDate: "",
   status: "",
 };
+
+export const emoji = [
+  "emojione:red-circle",
+  "twemoji:yellow-circle",
+  "twemoji:green-circle",
+];

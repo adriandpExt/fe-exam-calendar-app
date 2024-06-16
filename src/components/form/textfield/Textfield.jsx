@@ -6,6 +6,7 @@ export const Textfield = ({
   placeholder = "Please input...",
   type = "text",
   name,
+  label,
   iconName,
   isSvg,
   value,
@@ -27,20 +28,21 @@ export const Textfield = ({
   };
 
   return (
-    <>
-      <label className="input input-bordered flex items-center gap-2">
+    <div className="font-mono">
+      {label}
+      <div className="input input-bordered flex items-center gap-2 pl-8 h-10 ">
         {renderIsSvg()}
         <input
           type={type}
-          className="grow pl-8 whitespace-pre"
+          className="grow whitespace-pre "
           placeholder={placeholder}
           name={name}
           value={value}
           onChange={onChange}
         />
-      </label>
+      </div>
       <div className="flex sm:justify-end justify-start">{renderError()}</div>
-    </>
+    </div>
   );
 };
 
