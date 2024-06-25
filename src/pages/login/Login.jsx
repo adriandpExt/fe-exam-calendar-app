@@ -1,30 +1,33 @@
 import "react-toastify/dist/ReactToastify.css";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { useFormik } from "formik";
 
 import { SvgIcons, Textfield } from "~/components";
-
 import { useLogin } from "~/queries/login";
 
 import { validationSchema, generateToken } from "./utils";
+import useLoginStore from "~/store/useLogin";
+import { getTokenFromLocalStorage } from "~/utils/localStorage";
 
 const Login = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn, login } = useLoginStore();
 
   const navigate = useNavigate();
   const loginMutation = useLogin();
 
   useEffect(() => {
-    setInterval(() => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        setIsLoggedIn(true);
-      }
-    }, 2000);
-  }, []);
+    const token = getTokenFromLocalStorage();
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, [setIsLoggedIn]);
+
+  if (isLoggedIn) {
+    navigate("/dashboard");
+  }
 
   const handleSubmitLogin = async (values, { setSubmitting }) => {
     try {
@@ -36,11 +39,7 @@ const Login = () => {
         response.password === values.password
       ) {
         const token = generateToken(20);
-
-        localStorage.setItem("token", token);
-        localStorage.setItem("email", response.email);
-
-        setIsLoggedIn(true);
+        login(token, response.email);
         navigate("/dashboard");
       } else {
         toast.error("Incorrect email or password");
@@ -58,12 +57,8 @@ const Login = () => {
     onSubmit: handleSubmitLogin,
   });
 
-  if (isLoggedIn) {
-    return navigate("/dashboard");
-  }
-
   return (
-    <div
+    <main
       className="text-center h-screen p-10"
       style={{
         backgroundImage: `url(https://echo360.com/wp-content/uploads/2018/08/iStock-916563360.jpg)`,
@@ -76,8 +71,9 @@ const Login = () => {
         onSubmit={loginForm.handleSubmit}
       >
         <div className="flex items-center">
-          <SvgIcons name={"ic_calendar"} />
-          <p className="font-semibold text-xl from-stone-600">
+          <SvgIcons name={"ic_calendar"} className="drop-shadow-2xl" />
+
+          <p className="font-extrabold text-xl from-stone-600 text-red-950">
             LOGIN TO SETUP APPOINTMENT
           </p>
         </div>
@@ -108,7 +104,7 @@ const Login = () => {
         />
 
         <button
-          className="btn btn-outline hover:btn-primary w-full text-lg"
+          className="btn btn-outline hover:btn-primary w-full text-lg border-red-950 border-2"
           type="submit"
         >
           LOGIN
@@ -128,7 +124,7 @@ const Login = () => {
         theme="dark"
         transition={Bounce}
       />
-    </div>
+    </main>
   );
 };
 

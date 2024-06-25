@@ -1,5 +1,6 @@
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 import {
   Navbar,
@@ -14,16 +15,22 @@ import {
   useDeleteAppointment,
 } from "~/queries/appointment";
 
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import useViewSchedule from "~/store/useViewSchedule";
 
 const ViewSchedule = () => {
   const { data: allAppointments, refetch } = useGetAllAppointment();
   const deleteAppointmentMutation = useDeleteAppointment();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [updateModal, setUpdateModal] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] = useState(null);
-  const [filter, setFilter] = useState("All");
+  const {
+    isModalOpen,
+    updateModal,
+    selectedAppointment,
+    filter,
+    setIsModalOpen,
+    setUpdateModal,
+    setSelectedAppointment,
+    setFilter,
+  } = useViewSchedule();
 
   const handleFilterChange = (filter) => {
     setFilter(filter);
@@ -43,7 +50,7 @@ const ViewSchedule = () => {
     setUpdateModal(false);
     refetch();
     setSelectedAppointment(null);
-    toast.success("Successfullt updated!");
+    toast.success("Successfully updated!");
     stop();
   };
 
@@ -62,7 +69,7 @@ const ViewSchedule = () => {
         toast.success("Successfully deleted!");
       }
     } catch (error) {
-      toast.success("Error deleting appointment:", error);
+      toast.error("Error deleting appointment:", error);
     }
   };
 

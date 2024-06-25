@@ -3,18 +3,26 @@ import { useNavigate } from "react-router-dom";
 
 import Avatar from "./Avatar";
 import { SvgIcons } from "../../svg-icons";
+import useLoginStore from "~/store/useLogin";
+
+import {
+  getEmailFromLocalStorage,
+  getTokenFromLocalStorage,
+} from "~/utils/localStorage";
 
 export const UserDropdown = () => {
+  const { logout } = useLoginStore();
+
   const navigate = useNavigate();
-  const email = localStorage.getItem("email");
+  const email = getEmailFromLocalStorage();
 
   const handleLogout = () => {
-    localStorage.clear();
+    logout();
     navigate("/");
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getTokenFromLocalStorage();
     if (!token) {
       navigate("/");
     }

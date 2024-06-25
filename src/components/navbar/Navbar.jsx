@@ -1,26 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { SvgIcons } from "../svg-icons";
 
-import Filter from "./component/Filter";
-import UserDropdown from "./component/UserDropdown";
-import Avatar from "./component/Avatar";
-
-import { detailsList } from "./utils";
+import { Filter, UserDropdown, Drawer } from "./component";
 
 export const Navbar = ({ onFilterChange }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const navigate = useNavigate();
-
-  const email = localStorage.getItem("email");
-
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
-  };
 
   const handleFilterClick = (status) => {
     onFilterChange(status);
@@ -28,80 +14,6 @@ export const Navbar = ({ onFilterChange }) => {
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
-  };
-
-  const renderList = () => {
-    return detailsList?.map((item, id) => (
-      <li key={id}>
-        <button
-          onClick={() => handleFilterClick(item)}
-          className="font-semibold"
-        >
-          {item}
-        </button>
-      </li>
-    ));
-  };
-
-  const renderDrawerSide = () => {
-    return (
-      <div className="drawer-side">
-        <label
-          htmlFor="my-drawer"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-          onClick={toggleDrawer}
-        ></label>
-        <ul className="menu p-4 w-80 min-h-full bg-blue-50 text-base-content space-y-4">
-          <li className="font-extrabold text-2xl ">
-            <div className="flex">
-              <Avatar name={email} />
-              <p>{email}</p>
-            </div>
-          </li>
-          <li>
-            <button onClick={handleLogout} className="text-lg font-semibold ">
-              <SvgIcons name={"ic_logout"} style={{ height: 20, width: 20 }} />
-              Logout
-            </button>
-          </li>
-          <li>
-            <details className="collapse collapse-arrow bg-blue-50">
-              <summary className="collapse-title text-lg font-semibold">
-                <p className="flex items-center gap-2">
-                  <SvgIcons
-                    name={"ic_filter"}
-                    style={{ height: 20, width: 20 }}
-                  />
-                  Filter
-                </p>
-              </summary>
-              <div className="collapse-content">
-                <ul>{renderList()}</ul>
-              </div>
-            </details>
-          </li>
-        </ul>
-      </div>
-    );
-  };
-
-  const renderDrawer = () => {
-    return (
-      isDrawerOpen && (
-        <div className="drawer" style={{ zIndex: 999 }}>
-          <input
-            id="my-drawer"
-            type="checkbox"
-            className="drawer-toggle"
-            checked={isDrawerOpen}
-            onChange={toggleDrawer}
-          />
-
-          {renderDrawerSide()}
-        </div>
-      )
-    );
   };
 
   return (
@@ -118,14 +30,18 @@ export const Navbar = ({ onFilterChange }) => {
         </div>
 
         <SvgIcons
-          className="lg:hidden"
+          className="lg:hidden cursor-pointer"
           name={"ic_menu"}
           style={{ height: 30 }}
           onClick={toggleDrawer}
         />
       </nav>
 
-      {renderDrawer()}
+      <Drawer
+        isDrawerOpen={isDrawerOpen}
+        setIsDrawerOpen={toggleDrawer}
+        onFilterChange={handleFilterClick}
+      />
     </>
   );
 };

@@ -15,6 +15,7 @@ export const Filter = ({ onFilterChange }) => {
       </li>
     ));
   };
+
   return (
     <div className="dropdown dropdown-bottom dropdown-end bg-blue-50">
       <div tabIndex={0} role="button" className="btn btn-outline m-1">
