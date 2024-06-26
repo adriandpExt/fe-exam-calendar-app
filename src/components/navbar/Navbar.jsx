@@ -5,12 +5,8 @@ import { SvgIcons } from "../svg-icons";
 
 import { Filter, UserDropdown, Drawer } from "./component";
 
-export const Navbar = ({ onFilterChange }) => {
+export const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const handleFilterClick = (status) => {
-    onFilterChange(status);
-  };
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -25,7 +21,7 @@ export const Navbar = ({ onFilterChange }) => {
         </div>
 
         <div className="hidden lg:flex items-center justify-evenly">
-          <Filter onFilterChange={onFilterChange} />
+          <Filter />
           <UserDropdown />
         </div>
 
@@ -37,11 +33,7 @@ export const Navbar = ({ onFilterChange }) => {
         />
       </nav>
 
-      <Drawer
-        isDrawerOpen={isDrawerOpen}
-        setIsDrawerOpen={toggleDrawer}
-        onFilterChange={handleFilterClick}
-      />
+      <Drawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={toggleDrawer} />
     </>
   );
 };

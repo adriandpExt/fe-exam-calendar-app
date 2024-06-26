@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
 
-import { useNavigate } from "react-router-dom";
-
-import { getEmailFromLocalStorage } from "~/utils/localStorage";
-import useLoginStore from "~/store/useLogin";
+import { useAuth } from "~/hooks/useAuth";
+import useViewSchedule from "~/store/useViewSchedule";
 
 import { SvgIcons } from "../../svg-icons";
 
@@ -11,20 +9,9 @@ import Avatar from "./Avatar";
 
 import { detailsList } from "../utils";
 
-export const Drawer = ({ onFilterChange, isDrawerOpen, setIsDrawerOpen }) => {
-  const { logout } = useLoginStore();
-  const email = getEmailFromLocalStorage();
-
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
-  const handleFilterClick = (status) => {
-    onFilterChange(status);
-  };
+export const Drawer = ({ isDrawerOpen, setIsDrawerOpen }) => {
+  const { logoutAuth, email } = useAuth();
+  const { setFilter } = useViewSchedule();
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -33,10 +20,7 @@ export const Drawer = ({ onFilterChange, isDrawerOpen, setIsDrawerOpen }) => {
   const renderDetailList = () => {
     return detailsList?.map((item, id) => (
       <li key={id}>
-        <button
-          onClick={() => handleFilterClick(item)}
-          className="font-semibold"
-        >
+        <button onClick={() => setFilter(item)} className="font-semibold">
           {item}
         </button>
       </li>
@@ -53,7 +37,10 @@ export const Drawer = ({ onFilterChange, isDrawerOpen, setIsDrawerOpen }) => {
           </div>
         </li>
         <li>
-          <button onClick={handleLogout} className="text-lg font-semibold ">
+          <button
+            onClick={() => logoutAuth()}
+            className="text-lg font-semibold "
+          >
             <SvgIcons name={"ic_logout"} style={{ height: 20, width: 20 }} />
             Logout
           </button>

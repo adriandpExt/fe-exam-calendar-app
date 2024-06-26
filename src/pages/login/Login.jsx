@@ -1,33 +1,18 @@
 import "react-toastify/dist/ReactToastify.css";
 
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { useFormik } from "formik";
 
 import { SvgIcons, Textfield } from "~/components";
 import { useLogin } from "~/queries/login";
+import { useAuth } from "~/hooks/useAuth";
 
 import { validationSchema, generateToken } from "./utils";
-import useLoginStore from "~/store/useLogin";
-import { getTokenFromLocalStorage } from "~/utils/localStorage";
 
 const Login = () => {
-  const { isLoggedIn, setIsLoggedIn, login } = useLoginStore();
+  const { loginAuth } = useAuth();
 
-  const navigate = useNavigate();
   const loginMutation = useLogin();
-
-  useEffect(() => {
-    const token = getTokenFromLocalStorage();
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, [setIsLoggedIn]);
-
-  if (isLoggedIn) {
-    navigate("/dashboard");
-  }
 
   const handleSubmitLogin = async (values, { setSubmitting }) => {
     try {
@@ -38,14 +23,14 @@ const Login = () => {
         response.email === values.email &&
         response.password === values.password
       ) {
-        const token = generateToken(20);
-        login(token, response.email);
-        navigate("/dashboard");
+        const token = generateToken(36);
+
+        loginAuth(token, values.email);
       } else {
         toast.error("Incorrect email or password");
       }
     } catch (error) {
-      toast.error(`${error} Incorrect email or password`);
+      toast.error(`${error}`);
     } finally {
       setSubmitting(false);
     }

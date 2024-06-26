@@ -1,17 +1,14 @@
 import { SvgIcons } from "../../svg-icons";
-
+import useViewSchedule from "~/store/useViewSchedule";
 import { detailsList } from "../utils";
 
-// eslint-disable-next-line react/prop-types
-export const Filter = ({ onFilterChange }) => {
-  const handleFilterClick = (status) => {
-    onFilterChange(status);
-  };
+export const Filter = () => {
+  const { setFilter } = useViewSchedule();
 
   const renderList = () => {
     return detailsList?.map((item, id) => (
       <li key={id}>
-        <button onClick={() => handleFilterClick(item)}>{item}</button>
+        <button onClick={() => setFilter(item)}>{item}</button>
       </li>
     ));
   };

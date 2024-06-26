@@ -1,32 +1,10 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
 import Avatar from "./Avatar";
 import { SvgIcons } from "../../svg-icons";
-import useLoginStore from "~/store/useLogin";
 
-import {
-  getEmailFromLocalStorage,
-  getTokenFromLocalStorage,
-} from "~/utils/localStorage";
+import { useAuth } from "~/hooks/useAuth";
 
 export const UserDropdown = () => {
-  const { logout } = useLoginStore();
-
-  const navigate = useNavigate();
-  const email = getEmailFromLocalStorage();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
-  useEffect(() => {
-    const token = getTokenFromLocalStorage();
-    if (!token) {
-      navigate("/");
-    }
-  }, [navigate]);
+  const { logoutAuth, email } = useAuth();
 
   return (
     <div className="dropdown dropdown-bottom dropdown-end bg-blue-50">
@@ -40,7 +18,7 @@ export const UserDropdown = () => {
         className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
       >
         <li>
-          <button onClick={handleLogout} className="flex justify-between">
+          <button onClick={() => logoutAuth()} className="flex justify-between">
             Logout
             <SvgIcons name={"ic_logout"} style={{ height: 20, width: 20 }} />
           </button>
