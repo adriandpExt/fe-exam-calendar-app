@@ -7,10 +7,9 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState(null);
 
-  const getToken = (token) => localStorage.setItem("token", token);
-  const getEmail = (email) => localStorage.setItem("email", email);
+  const setToken = (token) => localStorage.setItem("token", token);
+  const setEmail = (email) => localStorage.setItem("email", email);
 
   const navigate = useNavigate();
 
@@ -29,10 +28,9 @@ export const AuthProvider = ({ children }) => {
   }, [isAuthenticated, navigate]);
 
   const handleLogin = (token, email) => {
-    getToken(token);
-    getEmail(email);
-    setIsAuthenticated(true);
     setToken(token);
+    setEmail(email);
+    setIsAuthenticated(true);
     navigate("/dashboard");
   };
 
@@ -47,7 +45,6 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     loginAuth: handleLogin,
     logoutAuth: handleLogout,
-    token,
     email: localStorage.getItem("email"),
   };
 

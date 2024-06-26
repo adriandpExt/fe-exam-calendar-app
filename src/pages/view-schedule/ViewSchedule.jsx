@@ -29,12 +29,7 @@ const ViewSchedule = () => {
     setIsModalOpen,
     setUpdateModal,
     setSelectedAppointment,
-    setFilter,
   } = useViewSchedule();
-
-  const handleFilterChange = (filter) => {
-    setFilter(filter);
-  };
 
   const filteredAppointments = allAppointments?.filter((appointment) => {
     if (filter === "All") return true;
@@ -123,7 +118,7 @@ const ViewSchedule = () => {
   };
   return (
     <main className=" h-full w-full p-10 space-y-5 bg-blue-50">
-      <Navbar onFilterChange={handleFilterChange} />
+      <Navbar />
       <button
         className="btn btn-outline m-1 w-56"
         onClick={() => setIsModalOpen(true)}
